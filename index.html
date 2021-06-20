@@ -31,6 +31,11 @@
         <input id="newProduct"  type="text" class="form-control" placeholder="Please fill in the form the name Product ..." aria-label="Product" aria-describedby="basic-addon1">
         <button onclick="addNewP()" type="button" class="btn btn-info">Create Product</button>
     </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Search</span>
+        <input id="search"  type="text" class="form-control" placeholder="Search product..." aria-label="Product" aria-describedby="basic-addon1">
+        <button onclick="searchP()" type="button" class="btn btn-success">Search</button>
+    </div>
 </div>
 
 <table class="table">
@@ -52,7 +57,8 @@
 </div>
 
 <script>
-    let sp = ["SP1", "SP2", "SP3"];
+    let sp = ["SP1","SP2","SP3","SP1", "Sp1", "sp1"];
+    let spSearch = [];
     function showAll()
     {
         let content = "";
@@ -61,6 +67,20 @@
             content+="    <tr>" +
                 "<td>"+j+"</td>"+
                 "        <td>"+sp[i]+"</td>" +
+                "        <td><button type=\"button\" class=\"btn btn-danger\" onclick='deleteByIndex("+i+")'>Delete</button>" +
+                "<button  type=\"button\" class=\"btn btn-primary\" onclick='updateById("+i+")'>Edit</button></td>" +
+                "    </tr>"
+        }
+        document.getElementById("sp").innerHTML = content;
+    }
+    function showSearchP()
+    {
+        let content = "";
+        for (let i = 0; i < spSearch.length; i++) {
+            let j = i+1;
+            content+="    <tr>" +
+                "<td>"+j+"</td>"+
+                "        <td>"+spSearch[i]+"</td>" +
                 "        <td><button type=\"button\" class=\"btn btn-danger\" onclick='deleteByIndex("+i+")'>Delete</button>" +
                 "<button  type=\"button\" class=\"btn btn-primary\" onclick='updateById("+i+")'>Edit</button></td>" +
                 "    </tr>"
@@ -77,6 +97,18 @@
 
         // in lại mang
         showAll();
+    }
+    function searchP(){
+        spSearch.splice(0,spSearch.length)
+        let search = document.getElementById("search").value;
+        console.log('search', search)
+        for (let i=0;i<sp.length;i++){
+            if(search === sp[i]){
+                spSearch.push(sp[i])
+            }
+        }
+        console.log('spSearch', spSearch)
+        showSearchP()
     }
     function deleteByIndex(index){
         sp.splice(index, 1);
@@ -102,6 +134,11 @@
         }
         return isValid;
     }
+    const array = [10, 11, 3, 20,3, 5];
+
+    const indexOfThree = array.indexOf(3);
+
+    console.log('indexOfThree',indexOfThree)//2
 </script>
 </body>
 </html>
