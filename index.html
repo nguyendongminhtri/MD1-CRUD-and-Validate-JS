@@ -1,63 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<!--    <style>-->
-<!--        label.validation-error{-->
-<!--            color:   red;-->
-<!--            margin-left: 5px;-->
-<!--        }-->
-
-<!--        .hide{-->
-<!--            display:none;-->
-<!--        }-->
-<!--    </style>-->
     <style>
-        .an{
+        .hide {
             display: none;
+        }
+        table {
+            width: 100%;
+        }
+        .product {
+            text-align: center;
         }
     </style>
 </head>
 <body>
+<div class="product">
+    <h1 style="color: rebeccapurple">CRUD EXAMPLE</h1>
+    <label style="color: red" class="hide" id="validate">The product is required! Please fill in the form! </label><br>
 
-<div>
-    <label>Product</label>
-    <label style="color: red" class="an" id="newProductValidate">This field is required.</label>
-<!--    <input type="text" name="fullName" id="fullName">-->
-    <input type="text" name ="newProduct"id="newProduct"><button onclick="addNewP()">Add</button>
+<!--    <input id="newProduct"><button onclick="addNewP()">Add</button>-->
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Product</span>
+        <input id="newProduct"  type="text" class="form-control" placeholder="Please fill in the form the name Product ..." aria-label="Product" aria-describedby="basic-addon1">
+        <button onclick="addNewP()" type="button" class="btn btn-info">Create Product</button>
+    </div>
 </div>
-<table border="1px">
-    <tr>
-        <td>Ten sp</td>
-        <td>thao tac</td>
+
+<table class="table">
+    <tr class="table-primary">
+        <th scope="col">STT</th>
+        <th scope="col">Name</th>
+        <th scope="col">Action</th>
     </tr>
     <tbody id="sp">
     <tr>
-        <td>SP1</td>
+        <td class="table-warning">SP1</td>
         <td></td>
     </tr>
     </tbody>
 </table>
-<button onclick="showAll()">hien thi ds</button>
+<!--<button onclick="showAll()">hien thi ds</button>-->
+<div class="product">
+    <button onclick="showAll()" type="button" class="btn btn-success">List Product</button>
+</div>
+
 <script>
     let sp = ["SP1", "SP2", "SP3"];
     function showAll()
     {
         let content = "";
         for (let i = 0; i < sp.length; i++) {
+            let j = i+1;
             content+="    <tr>" +
+                "<td>"+j+"</td>"+
                 "        <td>"+sp[i]+"</td>" +
-                "        <td><button onclick='deleteByIndex("+i+")'>Xoa</button>" +
-                "<button onclick='updateById("+i+")'>Sua</button></td>" +
+                "        <td><button type=\"button\" class=\"btn btn-danger\" onclick='deleteByIndex("+i+")'>Delete</button>" +
+                "<button  type=\"button\" class=\"btn btn-primary\" onclick='updateById("+i+")'>Edit</button></td>" +
                 "    </tr>"
         }
         document.getElementById("sp").innerHTML = content;
     }
     function addNewP(){
-        console.log('validate --->',validate())
+        //lay du lieu tu o input
         if(validate()){
-            //lay du lieu tu o input
             let newP = document.getElementById("newProduct").value;
             // them moi vao mang
             sp.push(newP);
@@ -75,22 +87,21 @@
         sp[index] = newP;
         showAll();
     }
-    function validate() {
+    function validate(){
         isValid = true;
-        if (document.getElementById("newProduct").value == "") {
+        if(document.getElementById("newProduct").value == ""){
             isValid = false;
-            document.getElementById("newProductValidate").classList.remove("an");
+            console.log('remove  tren--> ',   document.getElementById("validate").classList.contains("hide") )
+            document.getElementById("validate").classList.remove("hide");
+            console.log('remove  duoi--> ',   document.getElementById("validate").classList.contains("hide") )
         } else {
             isValid = true;
-            // console.log('====>',!document.getElementById("newProductValidate").classList.contains("an"))
-            // if (!document.getElementById("newProductValidate").classList.contains("an")){
-                document.getElementById("newProductValidate").classList.add("an");
-            // }
-
+            console.log('add TREN--> ',   document.getElementById("validate").classList.contains("hide") )
+            document.getElementById("validate").classList.add("hide");
+            console.log('add DUOI--> ',   document.getElementById("validate").classList.contains("hide") )
         }
         return isValid;
     }
-
 </script>
 </body>
 </html>
