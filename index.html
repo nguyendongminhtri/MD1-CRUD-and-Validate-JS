@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <style>-->
+<!--        label.validation-error{-->
+<!--            color:   red;-->
+<!--            margin-left: 5px;-->
+<!--        }-->
+
+<!--        .hide{-->
+<!--            display:none;-->
+<!--        }-->
+<!--    </style>-->
+    <style>
+        .an{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <label>Product</label>
+    <label style="color: red" class="an" id="newProductValidate">This field is required.</label>
+<!--    <input type="text" name="fullName" id="fullName">-->
+    <input type="text" name ="newProduct"id="newProduct"><button onclick="addNewP()">Add</button>
+</div>
+<table border="1px">
+    <tr>
+        <td>Ten sp</td>
+        <td>thao tac</td>
+    </tr>
+    <tbody id="sp">
+    <tr>
+        <td>SP1</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<button onclick="showAll()">hien thi ds</button>
+<script>
+    let sp = ["SP1", "SP2", "SP3"];
+    function showAll()
+    {
+        let content = "";
+        for (let i = 0; i < sp.length; i++) {
+            content+="    <tr>" +
+                "        <td>"+sp[i]+"</td>" +
+                "        <td><button onclick='deleteByIndex("+i+")'>Xoa</button>" +
+                "<button onclick='updateById("+i+")'>Sua</button></td>" +
+                "    </tr>"
+        }
+        document.getElementById("sp").innerHTML = content;
+    }
+    function addNewP(){
+        console.log('validate --->',validate())
+        if(validate()){
+            //lay du lieu tu o input
+            let newP = document.getElementById("newProduct").value;
+            // them moi vao mang
+            sp.push(newP);
+        }
+
+        // in lại mang
+        showAll();
+    }
+    function deleteByIndex(index){
+        sp.splice(index, 1);
+        showAll();
+    }
+    function updateById(index){
+        let newP = prompt("Moi ban nhap thong tin moi", sp[index]);
+        sp[index] = newP;
+        showAll();
+    }
+    function validate() {
+        isValid = true;
+        if (document.getElementById("newProduct").value == "") {
+            isValid = false;
+            document.getElementById("newProductValidate").classList.remove("an");
+        } else {
+            isValid = true;
+            // console.log('====>',!document.getElementById("newProductValidate").classList.contains("an"))
+            // if (!document.getElementById("newProductValidate").classList.contains("an")){
+                document.getElementById("newProductValidate").classList.add("an");
+            // }
+
+        }
+        return isValid;
+    }
+
+</script>
+</body>
+</html>
